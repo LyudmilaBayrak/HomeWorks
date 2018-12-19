@@ -10,9 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Authorization {
+import java.util.List;
+
+
+public class SearchJob {
     @Test
-    public void SuccessfulLogin() {
+    public void Test1() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -21,18 +24,20 @@ public class Authorization {
 
         WebElement login = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#login-email")));
         login.sendKeys("lyusiena83@gmail.com");
-
         WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#login-password")));
         password.sendKeys("password");
+        WebElement buttonLogin = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#login-submit")));
+        buttonLogin.submit();
 
-        WebElement buttonlogin = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#login-submit")));
-        buttonlogin.submit();
-        driver.findElement(By.cssSelector("[class*=share-box__open]")).click();
-        driver.findElement(By.cssSelector("[class*=share-box__close]")).click();
+        driver.findElement(By.cssSelector("#jobs-tab-icon")).click();
+        driver.findElement(By.cssSelector("[id*=jobs-search-box-keyword]")).click();
+        driver.findElement(By.cssSelector("[id*=jobs-search-box-keyword]")).sendKeys("QA");
+        driver.findElement(By.cssSelector("button.jobs-search-box__submit-button")).click();
 
-        WebElement topMenu = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#extended-nav")));
-        Assert.assertTrue(topMenu.isDisplayed());
+        Thread.sleep(5000);
+        List<WebElement> webElements = driver.findElements(By.cssSelector("ul.jobs-search-results__list li.occludable-update"));
+        Assert.assertTrue(webElements.size() > 0);
 
         driver.close();
     }
-    }
+}
