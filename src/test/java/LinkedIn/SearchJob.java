@@ -22,7 +22,7 @@ public class SearchJob {
         WebElement loginField = driver.findElement(By.cssSelector("#login-email"));
         loginField.sendKeys("lyusiena83@gmail.com");
         WebElement passwordField = driver.findElement(By.cssSelector("#login-password"));
-        passwordField.sendKeys("lb03051992");
+        passwordField.sendKeys("password");
         WebElement loginButton = driver.findElement(By.cssSelector("#login-submit"));
         loginButton.submit();
     }
